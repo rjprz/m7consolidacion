@@ -40,7 +40,7 @@
                     <v-icon color="amber ">mdi-pencil</v-icon>
                   </v-btn>
                   <v-btn text>
-                    <v-icon color="red darken-2">mdi-delete</v-icon>
+                    <v-icon @click="borrar(curso.id)" color="red darken-2">mdi-delete</v-icon>
                   </v-btn>
                 </td>
               </tr>
@@ -50,40 +50,39 @@
       </v-col>
     </v-row>
     <v-divider class="ma-6" inset></v-divider>
-    <v-row >
-      
+    <v-row>
       <v-col>
-        <v-row class="d-flex justify-center mb-3" >
+        <v-row class="d-flex justify-center mb-3">
           <v-chip color="purple" label outlined large>
             <v-icon>mdi-account-multiple</v-icon>
             Cantidad total de alumnos permitidos: {{ totalAlumnos }} alumnos
           </v-chip>
         </v-row>
-        <v-row class="d-flex justify-center mb-3" >
+        <v-row class="d-flex justify-center mb-3">
           <v-chip color="light-blue" label outlined large>
             <v-icon>mdi-account-multiple-check</v-icon>
             Cantidad total de alumnos inscritos: {{ totalInscritos }} alumnos
           </v-chip>
         </v-row>
-        <v-row class="d-flex justify-center mb-3" >
+        <v-row class="d-flex justify-center mb-3">
           <v-chip color="red" label outlined large>
             <v-icon>mdi-account-multiple-plus</v-icon>
             Cantidad total de cupos restantes: {{ cuposRestantes }} cupos
           </v-chip>
         </v-row>
-        <v-row class="d-flex justify-center mb-3" >
+        <v-row class="d-flex justify-center mb-3">
           <v-chip color="pink" label outlined large>
             <v-icon>mdi-cancel</v-icon>
             Cantidad total de cursos terminados: {{ cursosTerminados }} cursos
           </v-chip>
         </v-row>
-        <v-row class="d-flex justify-center mb-3" >
+        <v-row class="d-flex justify-center mb-3">
           <v-chip color="lime darken-3" label outlined large>
             <v-icon>mdi-bell-ring</v-icon>
             Cantidad total de cursos activos: {{ cursosActivos }} cursos
           </v-chip>
         </v-row>
-        <v-row class="d-flex justify-center mb-3" >
+        <v-row class="d-flex justify-center mb-3">
           <v-chip color="orange" label outlined large>
             <v-icon>mdi-bell-ring</v-icon>
             Cantidad total de cursos: {{ totalCursos }} cursos
@@ -95,7 +94,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 export default {
   name: "tabla-comp",
   // props: {},
@@ -104,6 +103,7 @@ export default {
   },
   computed: {
     ...mapState(["cursos"]),
+    ...mapGetters(['getCursos']),
     totalAlumnos() {
       return this.cursos.reduce(
         (accumulator, currentValue) => accumulator + currentValue.cupos,
@@ -129,7 +129,15 @@ export default {
       return this.cursos.length;
     },
   },
-  //methods: {},
+  methods: {
+    ...mapActions(['borrarCurso']),
+    borrar(id){
+      let index =  this.getCursos.findIndex((curso) => curso.id === id)
+      this.borrarCurso(index)
+
+    }
+   
+  },
   // watch: {},
   // components: {},
   // mixins: [],

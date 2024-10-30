@@ -83,8 +83,21 @@ export default new Vuex.Store({
       },
     ],
   },
-  getters: {},
-  mutations: {},
-  actions: {},
+  getters: {
+    getCursos: state=>{
+      return state.cursos
+    }
+  },
+  mutations: {
+    BORRAR_CURSO(state,index){
+      state.cursos.splice(index,1)
+    }
+  },
+  actions: {
+    borrarCurso({commit},index){
+        commit("BORRAR_CURSO",index)
+        console.log(index);
+    }
+  },
   modules: {},
 });
