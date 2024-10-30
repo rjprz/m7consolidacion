@@ -1,8 +1,11 @@
 <template>
-  <h1>soy el admin</h1>
+  <v-container>
+    <TablaCursos/>
+  </v-container>
 </template>
 
 <script>
+import TablaCursos from '@/components/TablaCursos.vue';
 export default {
   name: 'admin-comp',
   // props: {},
@@ -12,7 +15,9 @@ export default {
   // computed: {},
   //methods: {},
   // watch: {},
-  // components: {},
+  components: {
+    TablaCursos
+  },
   // mixins: [],
   // filters: {},
   // -- Lifecycle Methods
